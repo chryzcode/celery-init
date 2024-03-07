@@ -127,12 +127,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Celery settings
 CELERY_BROKER_URL = 'redis://localhost:6379/0'
-timezone = "Australia/Tasmania"
 CELERY_TASK_TRACK_STARTED = True
-CELERY_TASK_TIME_LIMIT = 30 * 60
-CELERY_ENABLED = True
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_SERIALIZER = 'json'
+rate_limit = '10/m'
+task_serializer = 'json'
+result_serializer = 'json'
+accept_content = ['json']
+timezone = 'Europe/London'
+enable_utc = True
+
 
 
 EMAIL_HOST = config('EMAIL_HOST')
@@ -140,4 +142,4 @@ EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = config('EMAIL_PORT')
 EMAIL_USE_TLS = True
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

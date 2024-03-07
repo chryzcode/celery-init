@@ -4,6 +4,8 @@ from celery import shared_task
 from django.core.mail import send_mail
 from django.conf import settings
 
+
+
 @shared_task
 def my_task(arg1, arg2):
     # Task logic here
@@ -17,7 +19,7 @@ def test_send_mail():
         subject = "A Test",
         message = "",
         from_email = settings.EMAIL_HOST_USER,
-        recipient_list = ['test@gmail.com',],
+        recipient_list = ['chryzalaba2003@gmail.com',],
         html_message=f"""
        <h3> Hello, </h3>
        <p>
@@ -27,5 +29,8 @@ def test_send_mail():
         """,
         fail_silently=False,
     )
+
+
+
 
 
