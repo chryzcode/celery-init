@@ -139,9 +139,6 @@ result_backend = 'django-db'
 
 beat_scheduler = 'django_celery_beat.schedulers:DatabaseScheduler'
 
-CELERY_IMPORTS = [
-    'init_app.tasks',
-]
 
 
 EMAIL_HOST = config('EMAIL_HOST')

@@ -16,8 +16,9 @@ app.config_from_object('django.conf:settings')
 app.conf.beat_schedule = {
     'every-10-seconds': {
         'task': 'init_app.tasks.test',
-        'schedule': 10,  # Adjust the time as per your requirement
-        # 'args': ('Damn',),
+        # 'schedule': 10, every 10 seconds
+        'schedule': crontab(minute="*/1"),  # Adjust the time as per your requirement
+        'args': ('Damn', ),
     },
 }
 

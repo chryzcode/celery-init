@@ -16,6 +16,9 @@ pip install django-celery-results
 
 ### Create a celery.py and tasks.py file and make config in settings.py file
 
+- check the __init__.py file of the project folder
+- Don't forget to migrate
+
 To run Celery and process tasks, you need to start a Celery worker process.
 celery -A your_project worker --loglevel=info
 celery -A celery_init worker --loglevel=info
@@ -23,8 +26,7 @@ celery -A celery_init worker --loglevel=info
 - For Celery Beat
 celery -A celery_init beat --loglevel=debug --scheduler django_celery_beat.schedulers:DatabaseScheduler
 
-- check the __init__.py file of the project folder
-- Don't forget to migrate
+
 
 
 - for configuration
