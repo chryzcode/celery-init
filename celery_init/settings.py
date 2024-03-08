@@ -40,6 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'init_app',
     'rest_framework',
+
+    #celery
+    'dajngo_celery_results',
     'django_celery_beat',
 ]
 
@@ -128,13 +131,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Celery settings
 CELERY_BROKER_URL = 'redis://localhost:6379/0'
-CELERY_TASK_TRACK_STARTED = True
 rate_limit = '10/m'
 task_serializer = 'json'
 result_serializer = 'json'
 accept_content = ['json']
-timezone = 'Europe/London'
-enable_utc = True
+timezone = 'Africa/Lagos'
+result_backend = 'django-db'
+
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 
 
 
