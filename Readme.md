@@ -24,6 +24,7 @@ celery -A celery_init worker --loglevel=info
 celery -A celery_init beat --loglevel=debug --scheduler django_celery_beat.schedulers:DatabaseScheduler
 
 - check the __init__.py file of the project folder
+- Don't forget to migrate
 
 
 - for configuration

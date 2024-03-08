@@ -5,8 +5,8 @@ from django.core.mail import send_mail
 
 # Define your task
 @shared_task(bind = True)
-def test():
-    print('Hello')
+def test(data):
+    print(f'Hello, {data}')
 
 
 
@@ -27,15 +27,6 @@ def test_send_mail():
         fail_silently=False,
     )
     print("Your task is executed after 30 seconds")
-
-
-celery.conf.beat_schedule = {
-    'send-email-every-day': {
-        'task': 'tasks.test_send_mail',
-        'schedule': crontab(minute=1),  # Adjust the time as per your requirement
-        # 'args': ('Subject', 'Message', ['recipient@example.com']),
-    },
-}
 
 
 

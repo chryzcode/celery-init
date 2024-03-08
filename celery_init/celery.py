@@ -13,7 +13,11 @@ app.config_from_object(settings, namespace='CELERY')
 
 
 app.conf.beat_scheduler = {
-
+    'every-10-seconds': {
+        'task': 'init_app.tasks.test',
+        'schedule': crontab(minute=1),  # Adjust the time as per your requirement
+        'args': (['Damn',]),
+    },
 }
 
 

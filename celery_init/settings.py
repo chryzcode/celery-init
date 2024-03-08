@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'rest_framework',
 
     #celery
-    'dajngo_celery_results',
+    'django_celery_results',
     'django_celery_beat',
 ]
 
