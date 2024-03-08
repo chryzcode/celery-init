@@ -1,19 +1,16 @@
 from celery import shared_task
 from django.core.mail import send_mail
-from django.conf import settings
-from celery import Celery
-from celery.schedules import crontab
 
-celery = Celery('tasks', broker=settings.CELERY_BROKER_URL)
+
 
 # Define your task
-@celery.task
-def your_task():
-    # Your task logic goes here
-    print("Your Celery task is executed")
+@shared_task(bind = True)
+def test():
+    print('Hello')
 
 
-@celery.task
+
+@shared_task
 def test_send_mail():
     send_mail(
         subject = "A Test",

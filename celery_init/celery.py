@@ -8,8 +8,13 @@ from celery.schedules import crontab
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'celery_init.settings')
 
 app = Celery('celery_init')
-app
-app.config_from_object('django.conf:settings', namespace='CELERY')
+app.conf.enable_utc = False
+app.config_from_object(settings, namespace='CELERY')
+
+
+app.conf.beat_scheduler = {
+
+}
 
 
 app.autodiscover_tasks()

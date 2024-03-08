@@ -130,7 +130,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Celery settings
-CELERY_BROKER_URL = 'redis://localhost:6379/0'
+broker_url = 'redis://localhost:6379/0'
 rate_limit = '10/m'
 task_serializer = 'json'
 result_serializer = 'json'
@@ -138,7 +138,7 @@ accept_content = ['json']
 timezone = 'Africa/Lagos'
 result_backend = 'django-db'
 
-CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
+beat_scheduler = 'django_celery_beat.schedulers:DatabaseScheduler'
 
 
 
