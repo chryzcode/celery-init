@@ -1,19 +1,19 @@
-# tasks.py
-
 from celery import shared_task
 from django.core.mail import send_mail
 from django.conf import settings
+from celery import Celery
+from celery.schedules import crontab
+
+celery = Celery('tasks', broker=settings.CELERY_BROKER_URL)
+
+# Define your task
+@celery.task
+def your_task():
+    # Your task logic goes here
+    print("Your Celery task is executed")
 
 
-
-@shared_task
-def my_task(arg1, arg2):
-    # Task logic here
-    result = arg1 + arg2
-    return result
-
-
-@shared_task
+@celery.task
 def test_send_mail():
     send_mail(
         subject = "A Test",
@@ -29,7 +29,16 @@ def test_send_mail():
         """,
         fail_silently=False,
     )
+    print("Your task is executed after 30 seconds")
 
+
+celery.conf.beat_schedule = {
+    'send-email-every-day': {
+        'task': 'tasks.test_send_mail',
+        'schedule': crontab(minute=1),  # Adjust the time as per your requirement
+        # 'args': ('Subject', 'Message', ['recipient@example.com']),
+    },
+}
 
 
 

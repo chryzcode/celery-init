@@ -1,31 +1,22 @@
 import os
+
 from celery import Celery
-from django.conf import settings
 
-
-# for scheduling task
-from celery.schedules import crontab
-
+# Set the default Django settings module for the 'celery' program.
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'celery_init.settings')
-app = Celery('init_app', broker=settings.CELERY_BROKER_URL, backend=settings.CELERY_BROKER_URL)
-# app.conf.broker_url = settings.CELERY_BROKER_URL
-app.config_from_object('celery_init.settings', namespace='CELERY')
-# Load tasks from all registered Django app configs.
+
+app = Celery('celery_init')
+
+# Using a string here means the worker doesn't have to serialize
+# the configuration object to child processes.
+# - namespace='CELERY' means all celery-related configuration keys
+#   should have a `CELERY_` prefix.
+app.config_from_object('django.conf:settings', namespace='CELERY')
+
+# Load task modules from all registered Django apps.
 app.autodiscover_tasks()
+
 
 @app.task(bind=True, ignore_result=True)
 def debug_task(self):
     print(f'Request: {self.request!r}')
-
-
-
-app.conf.beat_schedule = {
-    #  test sending of mail after a minute
-    "test_send_mail_after_a_minute": {
-        "task": 'init_app.tasks.test_send_mail',
-        "schedule": crontab(minute='*/1'), #every 1 minute
-        # if the task requires arquements t function
-        #'args': (16, 16),
-    },
-
-}
