@@ -4,9 +4,9 @@ from django.core.mail import send_mail
 
 
 # Define your task
-@shared_task(bind = True)
-def test(data):
-    print(f'Hello, {data}')
+@shared_task
+def test():
+    print(f'Hello')
 
 
 

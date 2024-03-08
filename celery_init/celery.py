@@ -7,21 +7,22 @@ from celery.schedules import crontab
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'celery_init.settings')
 
-app = Celery('celery_init')
+app = Celery('celery_init',)
 app.conf.enable_utc = False
-app.config_from_object(settings, namespace='CELERY')
+app.config_from_object('django.conf:settings')
 
 
-app.conf.beat_scheduler = {
+
+app.conf.beat_schedule = {
     'every-10-seconds': {
         'task': 'init_app.tasks.test',
-        'schedule': crontab(minute=1),  # Adjust the time as per your requirement
-        'args': (['Damn',]),
+        'schedule': 10,  # Adjust the time as per your requirement
+        # 'args': ('Damn',),
     },
 }
 
 
-app.autodiscover_tasks()
+app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
 
 
 @app.task(bind=True, ignore_result=True)
